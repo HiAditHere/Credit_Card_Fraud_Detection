@@ -29,11 +29,6 @@ jobs:
       run: |
         airflow dags list
 
-
-    - name: Run Airflow DAG
-      run: |
-        airflow dags trigger 'pipeline'
-
     - name: Run unittests
       run: python -m unittest test.test_unittest
 
