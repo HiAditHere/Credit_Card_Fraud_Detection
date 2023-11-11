@@ -83,4 +83,4 @@ load_data_task >> drop_task >> convert_strdate_to_datetime_task >> slicer_task >
 
 # If this script is run directly, allow command-line interaction with the DAG
 if __name__ == "__main__":
-    dag.cli()
+    dag.cli() 
