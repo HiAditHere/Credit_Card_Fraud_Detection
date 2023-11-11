@@ -6,7 +6,7 @@ from dags.source.data_preprocess import load_data, data_preprocessing, drop, con
 from airflow import configuration as conf
 import os
 
-os.environ['AIRFLOW_HOME'] = 'config/'
+os.environ['AIRFLOW_HOME'] = '../config/airflow.cfg'
 
 conf.set('core', 'enable_xcom_pickling', 'True')
 
