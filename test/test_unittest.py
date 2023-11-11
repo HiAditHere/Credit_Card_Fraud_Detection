@@ -15,7 +15,7 @@ class TestPipeline(unittest.TestCase):
         self.assertEqual(1+1,2)
 
     def setUp(self):
-        self.dagbag = DagBag(dag_folder = 'dags/', include_examples = False)
+        self.dagbag = DagBag(dag_folder = "../dags", include_examples = False)
 
     def test_number_of_columns(self):
 
@@ -26,7 +26,7 @@ class TestPipeline(unittest.TestCase):
         dag.run()
 
         task_instance = dag.get_task('ohe_task')
-        xcom_result = task_instance.xcom_pull(task_ids='ohe_task')
+        xcom_result = task_instance.xcom_pull(task_ids='OHE')
         
         df = pickle.loads(xcom_result)
 
