@@ -25,9 +25,13 @@ jobs:
       run: |
         airflow db init
 
+    - name: Check for dag list
+      run: |
+        airflow list_dags
+
     - name: Run Airflow DAG
       run: |
-        airflow dags trigger pipeline
+        airflow dags trigger 'pipeline'
 
     - name: Run unittests
       run: python -m unittest test.test_unittest
