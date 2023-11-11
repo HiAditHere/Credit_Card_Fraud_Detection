@@ -42,7 +42,7 @@ class TestPipeline(unittest.TestCase):
 
         if dag:
             dag.clear()
-            
+
         dag.run()
 
         task_instance = dag.get_task('ohe_task')
