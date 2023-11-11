@@ -22,7 +22,9 @@ class TestPipeline(unittest.TestCase):
         dag_id = 'pipeline'
         dag = self.dagbag.get_dag(dag_id)
 
-        dag.clear()
+        if dag:
+            dag.clear()
+
         dag.run()
 
         task_instance = dag.get_task('ohe_task')
@@ -38,7 +40,9 @@ class TestPipeline(unittest.TestCase):
         dag_id = 'pipeline'
         dag = self.dagbag.get_dag(dag_id)
 
-        dag.clear()
+        if dag:
+            dag.clear()
+            
         dag.run()
 
         task_instance = dag.get_task('ohe_task')
