@@ -21,6 +21,13 @@ jobs:
     - name: Install dependencies
       run: pip install -r requirements.txt
 
+    - name: Install Airflow
+      run: |
+        #!/bin/bash
+        pip install apache-airflow[postgres,mysql]==2.7.3 --install-option="--install-scripts=/usr/local/bin" --upgrade --install-option="--no-deps" --install-option="--no-binary :all:"
+        chmod +x install_airflow.sh
+        ./install_airflow.sh 
+
     - name: Initialize Airflow Database
       run: |
         airflow db init
