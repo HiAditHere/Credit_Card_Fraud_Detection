@@ -27,7 +27,8 @@ jobs:
 
     - name: Check for dag list
       run: |
-        airflow list_dags
+        airflow dags list
+
 
     - name: Run Airflow DAG
       run: |
