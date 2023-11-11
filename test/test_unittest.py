@@ -30,7 +30,7 @@ class TestPipeline(unittest.TestCase):
         
         df = pickle.loads(xcom_result)
 
-        #self.assertTrue(len(df) > 0, "DataFrame should not be empty")
+        self.assertTrue(len(df) > 0, "DataFrame should not be empty")
         self.assertEqual(df.shape[1], 68, "Number of columns should be 68" )
 
 if __name__ == 'main':
