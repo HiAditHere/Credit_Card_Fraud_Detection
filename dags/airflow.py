@@ -2,8 +2,8 @@
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 from datetime import datetime, timedelta
-import src
-from src.data import load_data, data_preprocessing, drop, convert_strdate_to_datetime, slicer, merge_category, drop_2, ohe
+import source
+from source.data_preprocess import load_data, data_preprocessing, drop, convert_strdate_to_datetime, slicer, merge_category, drop_2, ohe
 from airflow import configuration as conf
 
 conf.set('core', 'enable_xcom_pickling', 'True')
