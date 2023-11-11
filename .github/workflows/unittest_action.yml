@@ -25,6 +25,14 @@ jobs:
       run: |
         airflow db init
 
+    - name: Start Airflow Web Server
+      run: |
+          airflow webserver -p 8080
+
+    - name: Start Airflow Scheduler
+      run: |
+          airflow scheduler
+
     - name: Check for dag list
       run: |
         airflow dags list
