@@ -25,6 +25,10 @@ jobs:
     - name: Set up Docker Compose
       run: docker-compose up -d
 
+    - name: Initialize Airflow Database
+      run: |
+        airflow db init
+
     - name: Check for dag list
       run: |
         airflow dags list
