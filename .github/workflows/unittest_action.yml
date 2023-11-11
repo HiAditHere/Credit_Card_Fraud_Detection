@@ -39,6 +39,10 @@ jobs:
       run: |
         airflow dags list
 
+    - name: Trigger pipeline
+      run: |
+        airflow dags trigger pipeline
+
     - name: Run unittests
       run: python -m unittest test.test_unittest
 
