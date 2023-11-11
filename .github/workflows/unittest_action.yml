@@ -6,8 +6,17 @@ on:
       - main
 
 jobs:
+
   build:
     runs-on: ubuntu-latest
+
+    services:
+      # Define services required by your Docker Compose file
+      postgres:
+        image: postgres:latest
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
     - name: Checkout code
@@ -21,12 +30,8 @@ jobs:
     - name: Install dependencies
       run: pip install -r requirements.txt
 
-    - name: Install Airflow
-      run: |
-        #!/bin/bash
-        pip install apache-airflow[postgres,mysql]==2.7.3 --install-option="--install-scripts=/usr/local/bin" --upgrade --install-option="--no-deps" --install-option="--no-binary :all:"
-        chmod +x install_airflow.sh
-        ./install_airflow.sh 
+    - name: Set up Docker Compose
+      run: docker-compose up -d
 
     - name: Initialize Airflow Database
       run: |
@@ -52,6 +57,9 @@ jobs:
 
     - name: Run unittests
       run: python -m unittest test.test_unittest
+
+    - name: Stop Docker Compose
+      run: docker-compose down
 
     - name: Notify on success
       if: success()
