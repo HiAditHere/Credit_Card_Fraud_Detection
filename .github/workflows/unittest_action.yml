@@ -9,7 +9,7 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -24,20 +24,6 @@ jobs:
 
     - name: Set up Docker Compose
       run: docker-compose up -d
-
-    - name: Initialize Airflow Database
-      run: |
-        airflow db init
-
-    - name: Start Airflow Web Server
-      run: |
-          airflow webserver -p 8080 &
-          sleep 10
-
-    - name: Start Airflow Scheduler
-      run: |
-          airflow scheduler &
-          sleep 10
 
     - name: Check for dag list
       run: |
