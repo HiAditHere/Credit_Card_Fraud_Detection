@@ -1,5 +1,4 @@
 import pandas as pd
-from kneed import KneeLocator
 import pickle
 import os
 from datetime import datetime
