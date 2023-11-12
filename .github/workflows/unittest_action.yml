@@ -28,7 +28,8 @@ jobs:
 
     - name: Configure Airflow
       run: |
-        echo "dags_folder = /github/workspace/dags" >> /home/runner/airflow.cfg
+        export AIRFLOW__CORE__DAGS_FOLDER=/dags
+        export AIRFLOW__CORE__LOAD_EXAMPLES=False
 
     - name: See contents of Dags
       run: |
