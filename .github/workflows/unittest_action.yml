@@ -22,6 +22,10 @@ jobs:
     - name: Install dependencies
       run: pip install -r requirements.txt
 
+    - name: Create Airflow Directory
+      run: |
+        mkdir -p ~/airflow
+
     - name: Configure Airflow
       run: |
         echo "dags_folder: /github/workspace/dags" > ~/airflow/airflow.cfg
