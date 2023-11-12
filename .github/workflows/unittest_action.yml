@@ -24,15 +24,6 @@ jobs:
 
     - name: Airflow-init
       run: docker-compose up airflow-init
-
-    - name: Compose Up
-      run: |
-        docker-compose up & 
-        sleep 5
-
-    - name: Check for dag list
-      run: |
-        docker-compose exec -T airflow /entrypoint.sh dags list
       
     - name: Run Airflow DAG
       run: docker-compose exec -T airflow /entrypoint.sh trigger_dag -e 2023-11-11 pipeline
