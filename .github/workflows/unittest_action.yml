@@ -26,9 +26,17 @@ jobs:
       run: |
         mkdir -p ~/airflow
 
+    - name: See contents of Dags
+      run: |
+        cat /home/runner/airflow.cfg
+
     - name: Configure Airflow
       run: |
         echo "dags_folder = /github/workspace/dags" >> /home/runner/airflow.cfg
+
+    - name: See contents of Dags
+      run: |
+        cat /home/runner/airflow.cfg
 
 
     - name: Initialize Database
