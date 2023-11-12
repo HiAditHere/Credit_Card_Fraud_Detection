@@ -28,6 +28,7 @@ jobs:
 
     - name: Configure Airflow
       run: |
+        echo "[core]" > ~/airflow/airflow.cfg
         echo "dags_folder: /github/workspace/dags" > ~/airflow/airflow.cfg
 
 
