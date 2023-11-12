@@ -26,7 +26,7 @@ jobs:
       run: docker-compose up airflow-init
       
     - name: Run Airflow DAG
-      run: docker-compose exec -T airflow /entrypoint.sh trigger_dag -e 2023-11-11 pipeline
+      run: docker-compose exec -T airflow airflow dags trigger pipeline
 
     - name: Trigger pipeline
       run: |
