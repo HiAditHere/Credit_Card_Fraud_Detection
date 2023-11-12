@@ -22,22 +22,18 @@ jobs:
     - name: Install dependencies
       run: pip install -r requirements.txt
 
-    - name: Set up Docker Compose
-      run: docker-compose up -d
+    - name: Start Airflow Containers
+      run: |
+        docker-compose up -d
+        docker-compose exec -T airflow /entrypoint.sh initdb
+        docker-compose exec -T airflow /entrypoint.sh scheduler -D
+        docker-compose exec -T airflow /entrypoint.sh webserver -D
 
-    - name: Create Logs Directory
-      run: |
-        mkdir -p $HOME/logs/scheduler
-        chmod -R 777 $HOME/logs
-    
-    - name: Initialize Airflow Database
-      run: |
-        airflow db init
-
-    - name: Start Airflow Scheduler
-      run: |
-          airflow scheduler &
-          sleep 5
+    - name: Wait for Airflow to Initialize
+      run: sleep 60
+      
+    - name: Run Airflow DAG
+      run: docker-compose exec -T airflow /entrypoint.sh trigger_dag -e 2023-11-11 pipeline
 
     - name: Check for dag list
       run: |
