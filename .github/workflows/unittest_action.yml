@@ -22,6 +22,11 @@ jobs:
     - name: Install dependencies
       run: pip install -r requirements.txt
 
+    - name: Configure Airflow
+      run: |
+        echo "dags_folder: ..dags/" > ~/airflow/airflow.cfg
+
+
     - name: Initialize Database
       run: airflow db init
 
