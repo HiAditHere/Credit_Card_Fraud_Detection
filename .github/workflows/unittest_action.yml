@@ -26,7 +26,9 @@ jobs:
       run: docker-compose up airflow-init
 
     - name: Compose Up
-      run: docker-compose up
+      run: |
+        docker-compose up & 
+        sleep 5
 
     - name: Check for dag list
       run: |
