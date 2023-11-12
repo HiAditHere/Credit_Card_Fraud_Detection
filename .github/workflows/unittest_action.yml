@@ -22,11 +22,14 @@ jobs:
     - name: Install dependencies
       run: pip install -r requirements.txt
 
-    - name: Airflow-init
-      run: docker-compose up airflow-init
-      
-    - name: Run Airflow DAG
-      run: docker-compose exec -T airflow airflow dags trigger pipeline
+    - name: Initialize Database
+      run: airflow db init
+
+    - name: Start Scheduler
+      run: airflow scheduler
+
+    - name: List all Dags
+      run: airflow dags list
 
     - name: Trigger pipeline
       run: |
@@ -34,9 +37,6 @@ jobs:
 
     - name: Run unittests
       run: python -m unittest test.test_unittest
-
-    - name: Stop Docker Compose
-      run: docker-compose down
 
     - name: Notify on success
       if: success()
