@@ -28,6 +28,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
       - name: Run Airflow
         run: |
           docker-compose up -d postgres redis
