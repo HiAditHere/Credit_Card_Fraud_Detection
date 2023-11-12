@@ -24,10 +24,10 @@ jobs:
 
     - name: Start Airflow Containers
       run: |
-        docker-compose up -d
-        docker-compose exec -T airflow /entrypoint.sh initdb
-        docker-compose exec -T airflow /entrypoint.sh scheduler -D
-        docker-compose exec -T airflow /entrypoint.sh webserver -D
+        docker-compose up -d &
+        docker-compose exec -T airflow /entrypoint.sh initdb &
+        docker-compose exec -T airflow /entrypoint.sh scheduler -D &
+        docker-compose exec -T airflow /entrypoint.sh webserver -D &
 
     - name: Wait for Airflow to Initialize
       run: sleep 60
