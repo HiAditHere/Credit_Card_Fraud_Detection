@@ -22,10 +22,6 @@ jobs:
     - name: Install dependencies
       run: pip install -r requirements.txt
 
-    - name: Create Airflow Directory
-      run: |
-        mkdir -p ~/airflow
-
     - name: See contents of Dags
       run: |
         ls -la
