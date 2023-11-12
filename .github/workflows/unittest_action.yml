@@ -26,7 +26,9 @@ jobs:
       run: airflow db init
 
     - name: Start Scheduler
-      run: airflow scheduler -d
+      run: |
+       airflow scheduler -D &
+       sleep 10
 
     - name: List all Dags
       run: airflow dags list
