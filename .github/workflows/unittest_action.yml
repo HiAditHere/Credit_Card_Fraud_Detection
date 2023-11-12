@@ -28,7 +28,7 @@ jobs:
 
     - name: See contents of Dags
       run: |
-        cat /home/runner/airflow.cfg
+        ls -la
 
     - name: Configure Airflow
       run: |
