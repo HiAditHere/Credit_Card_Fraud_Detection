@@ -27,6 +27,7 @@ jobs:
 
     - name: Initialize Airflow Database
       run: |
+        export AIRFLOW_HOME=$(pwd)
         airflow db init
 
     - name: Check for dag list
