@@ -31,11 +31,6 @@ jobs:
         export AIRFLOW__CORE__DAGS_FOLDER=/dags
         export AIRFLOW__CORE__LOAD_EXAMPLES=False
 
-    - name: See contents of Dags
-      run: |
-        cat /home/runner/airflow.cfg
-
-
     - name: Initialize Database
       run: airflow db init
 
