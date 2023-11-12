@@ -1,4 +1,4 @@
-name: Airflow Workflow
+name: Python Unittests
 
 on:
   push:
@@ -6,55 +6,49 @@ on:
       - main
 
 jobs:
-  run_airflow_dag:
+
+  build:
     runs-on: ubuntu-latest
 
-    services:
-      redis:
-        image: "redis:latest"
-        ports:
-          - "6379:6379"
-
-      postgres:
-        image: "postgres:13"
-        env:
-          POSTGRES_USER: airflow
-          POSTGRES_PASSWORD: airflow
-          POSTGRES_DB: airflow
-        ports:
-          - "5432:5432"
-
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
 
-      - name: Run Airflow
-        run: |
-          docker-compose up -d postgres redis
-          docker-compose exec -T airflow-init /bin/bash -c "airflow db init && airflow users create --username admin --password admin --firstname Admin --lastname User --role Admin --email admin@example.org"
-          docker-compose up -d airflow-webserver airflow-scheduler airflow-worker airflow-triggerer
+    - name: Install dependencies
+      run: pip install -r requirements.txt
 
-      - name: Trigger Airflow DAG
-        run: |
-          docker-compose exec -T airflow-cli /bin/bash -c "airflow dags trigger pipeline"
+    - name: Airflow-init
+      run: docker-compose up airflow-init
 
-      - name: Check Airflow Logs
-        run: |
-          docker-compose logs airflow-webserver
+    - name: Compose Up
+      run: docker-compose up
 
-      - name: Run unittests
-        run: python -m unittest test.test_unittest
-  
-      - name: Stop Docker Compose
-        run: docker-compose down
-  
-      - name: Notify on success
-        if: success()
-        run: echo "Unit tests passed successfully"
-  
-      - name: Notify on failure
-        if: failure()
-        run: echo "Unit tests failed"
+    - name: Check for dag list
+      run: |
+        airflow dags list
+      
+    - name: Run Airflow DAG
+      run: docker-compose exec -T airflow /entrypoint.sh trigger_dag -e 2023-11-11 pipeline
+
+    - name: Trigger pipeline
+      run: |
+        airflow dags trigger -e 2023-11-11 pipeline
+
+    - name: Run unittests
+      run: python -m unittest test.test_unittest
+
+    - name: Stop Docker Compose
+      run: docker-compose down
+
+    - name: Notify on success
+      if: success()
+      run: echo "Unit tests passed successfully"
+
+    - name: Notify on failure
+      if: failure()
+      run: echo "Unit tests failed"
