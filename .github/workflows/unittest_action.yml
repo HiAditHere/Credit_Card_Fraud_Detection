@@ -35,7 +35,7 @@ jobs:
 
     - name: Trigger pipeline
       run: |
-        airflow dags trigger pipeline
+        airflow dags trigger -e 2023-11-11 pipeline
 
     - name: Run unittests
       run: python -m unittest test.test_unittest

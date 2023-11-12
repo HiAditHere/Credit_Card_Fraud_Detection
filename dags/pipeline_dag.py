@@ -12,7 +12,7 @@ os.environ['AIRFLOW_HOME'] = '../config/airflow.cfg'
 
 default_args = {
     'owner': 'team5',
-    'start_date': datetime(2023, 11, 10),
+    'start_date': datetime(2023, 11, 11),
     'retries': 0, # Number of retries in case of task failure
     'retry_delay': timedelta(minutes=5), # Delay before retries
 }
