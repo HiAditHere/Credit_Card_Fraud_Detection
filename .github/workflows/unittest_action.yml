@@ -27,8 +27,7 @@ jobs:
 
     - name: docker compose up
       run: |
-       docker-compose up -D &
-       sleep 10
+       docker-compose up -D
 
     - name: List DAGs in Airflow container
       run: docker-compose -f docker-compose.yml exec airflow-webserver ls /opt/airflow/dags
