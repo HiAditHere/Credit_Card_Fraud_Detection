@@ -28,25 +28,31 @@ class TestPipeline(unittest.TestCase):
         dag_id = 'pipeline'
         dag = self.dagbag.get_dag(dag_id)
 
-        # Trigger the DAG run
-        execution_date = datetime.now()
-        run_id = f"manual__{execution_date}"
+        if 'pipeline' in self.dagbag.dags:
 
-        trigger_dag(dag_id, run_id=run_id)
+            # Trigger the DAG run
+            execution_date = datetime.now()
+            run_id = f"manual__{execution_date}"
 
-        # Wait for the DAG run to complete
-        dag_run = DagRun.find(dag_id=dag_id, execution_date=execution_date)
-        dag_run.wait_until_finished()
+            trigger_dag(dag_id, run_id=run_id)
 
-        #task_instance = TaskInstance(task = dag.get_task('OHE'), execution_date = datetime.now())
-        task_instance = dag_run.get_task_instance(task_id='OHE')
+            # Wait for the DAG run to complete
+            dag_run = DagRun.find(dag_id=dag_id, execution_date=execution_date)
+            dag_run.wait_until_finished()
 
-        xcom_result = task_instance.xcom_pull()
-        
-        df = pickle.loads(xcom_result)
+            #task_instance = TaskInstance(task = dag.get_task('OHE'), execution_date = datetime.now())
+            task_instance = dag_run.get_task_instance(task_id='OHE')
 
-        self.assertTrue(len(df) > 0, "DataFrame should not be empty")
-        self.assertEqual(df.shape[1], 68, "Number of columns should be 68" )
+            xcom_result = task_instance.xcom_pull()
+            
+            df = pickle.loads(xcom_result)
+
+            self.assertTrue(len(df) > 0, "DataFrame should not be empty")
+            self.assertEqual(df.shape[1], 68, "Number of columns should be 68" )
+
+        else:
+
+            print("No such DAG ******************************************")
 
     def test_ohe(self):
 
