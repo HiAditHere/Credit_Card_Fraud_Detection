@@ -22,15 +22,18 @@ jobs:
     - name: Install dependencies
       run: pip install -r requirements.txt
 
-    - name: docker compose airflow-init
-      run: docker-compose up airflow-init
+    - name: Initialize database
+      run: airflow db init
 
-    - name: List DAGs in Airflow container
-      run: docker-compose exec airflow-webserver ls /opt/airflow/dags
+    - name: Start Scheduler
+      run: airflow scheduler -D
+
+    - name: List all DAGs
+      run: airflow dags list
 
     - name: Trigger pipeline
       run: |
-        docker-compose -f docker-compose.yml exec airflow dags triggerer -e 2023-11-1
+        airflow dags triggerer -e 2023-11-1
 
     - name: Run unittests
       run: python -m unittest test.test_unittest
