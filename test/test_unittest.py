@@ -5,6 +5,7 @@ from airflow.models import DagBag
 import pandas as pd
 import pickle
 import time
+from airflow.utils.db import create_session
 
 # Get the path to the project's root directory
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -35,7 +36,9 @@ class TestPipeline(unittest.TestCase):
         time.sleep(60)
 
         task_instance = dag.get_task('OHE')
-        xcom_result = task_instance.xcom_pull(task_ids='OHE')
+
+        with create_session() as session:
+            xcom_result = task_instance.xcom_pull(task_ids='ohe_task', session = session)
         
         df = pickle.loads(xcom_result)
 
@@ -52,8 +55,10 @@ class TestPipeline(unittest.TestCase):
 
         dag.run()
 
-        task_instance = dag.get_task('ohe_task')
-        xcom_result = task_instance.xcom_pull(task_ids='ohe_task')
+        task_instance = dag.get_task('OHE')
+
+        with create_session() as session:
+            xcom_result = task_instance.xcom_pull(task_ids='ohe_task', session = session)
 
         df = pickle.loads(xcom_result)
 
