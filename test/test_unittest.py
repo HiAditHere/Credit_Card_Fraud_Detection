@@ -4,6 +4,7 @@ import unittest
 from airflow.models import DagBag
 import pandas as pd
 import pickle
+import time
 
 # Get the path to the project's root directory
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -30,6 +31,8 @@ class TestPipeline(unittest.TestCase):
             dag.clear()
 
         dag.run()
+
+        time.sleep(60)
 
         task_instance = dag.get_task('ohe_task')
         xcom_result = task_instance.xcom_pull(task_ids='OHE')
