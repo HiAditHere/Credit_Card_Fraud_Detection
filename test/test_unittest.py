@@ -8,6 +8,7 @@ import time
 from airflow.utils.db import create_session
 from datetime import datetime
 from airflow.api.common.experimental.trigger_dag import trigger_dag
+import pytz
 
 # Get the path to the project's root directory
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -33,7 +34,7 @@ class TestPipeline(unittest.TestCase):
             time.sleep(30)
 
             # Trigger the DAG run
-            execution_date = datetime(2023,11,11)
+            execution_date = datetime(2023,11,11,tzinfo=pytz.UTC)
             run_id = "manual1"
 
             # Create a DagRun manually
