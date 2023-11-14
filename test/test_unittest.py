@@ -33,15 +33,30 @@ class TestPipeline(unittest.TestCase):
             time.sleep(30)
 
             # Trigger the DAG run
-            execution_date = datetime.now()
+            execution_date = datetime(2023-11-11)
             run_id = f"manual__{execution_date}"
 
-            dag.run(
+            # Create a DagRun manually
+            dag_run = DagRun(
+                dag_id=dag.dag_id,
                 run_id=run_id,
+                execution_date=execution_date
             )
 
+            # Add the DagRun to the session and commit
+            dag_run.dag = dag
+            dag_run.verify_integrity()
+            dag_run.update_state()
+            dag_run.update_state()
+            dag_run.log = []
+            dag_run.start_date = execution_date
+            dag_run.run_id = run_id
+            dag_run.state = 'running'
+
+            dag_run.create()
+
             # Wait for the DAG run to complete
-            dag_run = DagRun.find(dag_id=dag_id, execution_date=execution_date)
+            #dag_run = DagRun.find(dag_id=dag_id, execution_date=execution_date)
             dag_run.wait_until_finished()
 
             #task_instance = TaskInstance(task = dag.get_task('OHE'), execution_date = datetime.now())
