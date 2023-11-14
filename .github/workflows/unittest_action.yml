@@ -25,12 +25,8 @@ jobs:
     - name: docker compose airflow-init
       run: docker-compose up airflow-init
 
-    - name: docker compose up
-      run: |
-       docker-compose up -D
-
     - name: List DAGs in Airflow container
-      run: docker-compose -f docker-compose.yml exec airflow-webserver ls /opt/airflow/dags
+      run: docker-compose exec airflow-webserver ls /opt/airflow/dags
 
     - name: Trigger pipeline
       run: |
