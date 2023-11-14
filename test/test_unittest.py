@@ -22,10 +22,10 @@ class TestPipeline(unittest.TestCase):
         dag_id = 'pipeline'
         dag = self.dagbag.get_dag(dag_id)
 
-        '''if dag:
+        if dag:
             dag.clear()
 
-        dag.run()'''
+        dag.run()
 
         task_instance = dag.get_task('ohe_task')
         xcom_result = task_instance.xcom_pull(task_ids='OHE')
@@ -40,10 +40,10 @@ class TestPipeline(unittest.TestCase):
         dag_id = 'pipeline'
         dag = self.dagbag.get_dag(dag_id)
 
-        '''if dag:
+        if dag:
             dag.clear()
 
-        dag.run()'''
+        dag.run()
 
         task_instance = dag.get_task('ohe_task')
         xcom_result = task_instance.xcom_pull(task_ids='ohe_task')
