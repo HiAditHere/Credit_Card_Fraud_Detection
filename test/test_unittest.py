@@ -33,7 +33,7 @@ class TestPipeline(unittest.TestCase):
             time.sleep(30)
 
             # Trigger the DAG run
-            execution_date = datetime(2023-11-11)
+            execution_date = datetime(2023,11,11)
             run_id = f"manual__{execution_date}"
 
             # Create a DagRun manually
