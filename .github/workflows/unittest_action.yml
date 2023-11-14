@@ -31,9 +31,14 @@ jobs:
     - name: List all DAGs
       run: airflow dags list
 
+    - name: Search
+      run: |
+       sudo cd opt/airlfow/dags
+       ls -al
+
     - name: Trigger pipeline
       run: |
-        airflow dags triggerer -e 2023-11-1
+        airflow dags trigger -e 2023-11-1
 
     - name: Run unittests
       run: python -m unittest test.test_unittest
