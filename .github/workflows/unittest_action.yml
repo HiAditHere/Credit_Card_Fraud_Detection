@@ -33,7 +33,7 @@ jobs:
 
     - name: Search
       run: |
-       sudo cd opt/airlfow/dags
+       cd opt/airlfow/dags
        ls -al
 
     - name: Trigger pipeline
