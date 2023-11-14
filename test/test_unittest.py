@@ -32,9 +32,9 @@ class TestPipeline(unittest.TestCase):
 
             # Trigger the DAG run
             execution_date = datetime.now()
-            run_id = f"manual__{execution_date}"
+            #run_id = f"manual__{execution_date}"
 
-            trigger_dag(dag_id, run_id=run_id)
+            trigger_dag(dag_id)
 
             # Wait for the DAG run to complete
             dag_run = DagRun.find(dag_id=dag_id, execution_date=execution_date)
