@@ -8,6 +8,7 @@ import time
 from airflow.utils.db import create_session
 from datetime import datetime
 from airflow.api.common.experimental.trigger_dag import trigger_dag
+from airflow.utils.dag_run import create_dag_run
 
 # Get the path to the project's root directory
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -32,9 +33,14 @@ class TestPipeline(unittest.TestCase):
 
             # Trigger the DAG run
             execution_date = datetime.now()
-            #run_id = f"manual__{execution_date}"
+            run_id = f"manual__{execution_date}"
 
-            trigger_dag(dag_id)
+            create_dag_run(
+                dag,
+                run_id=run_id,
+                execution_date=execution_date,
+                state="running",  # Set the state to "running" to simulate an active run
+            )
 
             # Wait for the DAG run to complete
             dag_run = DagRun.find(dag_id=dag_id, execution_date=execution_date)
