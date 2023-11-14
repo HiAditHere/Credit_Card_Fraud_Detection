@@ -15,7 +15,7 @@ class TestPipeline(unittest.TestCase):
         self.assertEqual(1+1,2)
 
     def setUp(self):
-        self.dagbag = DagBag(dag_folder = "/dags", include_examples = False)
+        self.dagbag = DagBag(dag_folder = "/home/runner/work/Credit_Card_Fraud_Detection/Credit_Card_Fraud_Detection/dags", include_examples = False)
 
     def test_number_of_columns(self):
 
