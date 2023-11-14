@@ -19,6 +19,8 @@ class TestPipeline(unittest.TestCase):
 
     def test_number_of_columns(self):
 
+        print(project_root)
+
         dag_id = 'pipeline'
         dag = self.dagbag.get_dag(dag_id)
 
