@@ -2,6 +2,7 @@ import sys
 import os
 import unittest
 from airflow.models import DagBag
+from airflow.api.common.experimental.trigger_dag import trigger_dag
 import pandas as pd
 import pickle
 import time
@@ -30,11 +31,11 @@ class TestPipeline(unittest.TestCase):
         if dag:
             dag.clear()
 
-        dag.run()
+        trigger_dag(dag_id, run_id = 'dag_run')
 
         time.sleep(60)
 
-        task_instance = dag.get_task('ohe_task')
+        task_instance = dag.get_task_instance('dag_run', 'ohe_task')
         xcom_result = task_instance.xcom_pull(task_ids='OHE')
         
         df = pickle.loads(xcom_result)
