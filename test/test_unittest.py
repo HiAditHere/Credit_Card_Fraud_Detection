@@ -1,11 +1,13 @@
 import sys
 import os
 import unittest
-from airflow.models import DagBag
+from airflow.models import DagBag, TaskInstance, DagRun
 import pandas as pd
 import pickle
 import time
 from airflow.utils.db import create_session
+from datetime import datetime
+from airflow.api.common.experimental.trigger_dag import trigger_dag
 
 # Get the path to the project's root directory
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -26,19 +28,20 @@ class TestPipeline(unittest.TestCase):
         dag_id = 'pipeline'
         dag = self.dagbag.get_dag(dag_id)
 
-        print(dag)
+        # Trigger the DAG run
+        execution_date = datetime.now()
+        run_id = f"manual__{execution_date}"
 
-        if dag:
-            dag.clear()
+        trigger_dag(dag_id, run_id=run_id)
 
-        dag.run()
+        # Wait for the DAG run to complete
+        dag_run = DagRun.find(dag_id=dag_id, execution_date=execution_date)
+        dag_run.wait_until_finished()
 
-        time.sleep(60)
+        #task_instance = TaskInstance(task = dag.get_task('OHE'), execution_date = datetime.now())
+        task_instance = dag_run.get_task_instance(task_id='OHE')
 
-        task_instance = dag.get_task('OHE')
-
-        with create_session() as session:
-            xcom_result = task_instance.xcom_pull(task_ids='ohe_task', session = session)
+        xcom_result = task_instance.xcom_pull()
         
         df = pickle.loads(xcom_result)
 
