@@ -28,6 +28,9 @@ jobs:
     - name: Start Scheduler
       run: airflow scheduler -D
 
+    - name: Sleep
+      run: Sleep 30
+
     - name: Run unittests
       run: python -m unittest test.test_unittest
 
