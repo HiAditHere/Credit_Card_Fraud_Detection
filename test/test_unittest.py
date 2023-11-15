@@ -51,7 +51,6 @@ class TestPipeline(unittest.TestCase):
             dag_run.update_state()
             dag_run.log = []
             dag_run.start_date = execution_date
-            dag_run.run_id = run_id
             dag_run.state = 'running'
 
             dag_run.create()
