@@ -43,7 +43,7 @@ class TestPipeline(unittest.TestCase):
                 dag_id=dag.dag_id,
                 run_id=run_id,
                 execution_date=execution_date,
-                run_type=DagRunType.MANUAL,
+                run_type='manual',
             )
 
             # Add the DagRun to the session and commit
