@@ -47,7 +47,6 @@ class TestPipeline(unittest.TestCase):
 
             # Add the DagRun to the session and commit
             dag_run.dag = dag
-            dag_run.verify_integrity()
             dag_run.update_state()
             dag_run.update_state()
             dag_run.log = []
