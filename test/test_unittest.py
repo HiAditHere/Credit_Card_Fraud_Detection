@@ -38,10 +38,14 @@ class TestPipeline(unittest.TestCase):
             #dag_run = DagRun.find(dag_id=dag_id)
 
             print(dag_run)
-            dag_run.wait_until_finished()
+            #dag_run.wait_until_finished()
+
+            while dag_run.state not in {State.SUCCESS, State.FAILED}:
+                time.sleep(5)  # Adjust the sleep duration as needed
+                dag_run.refresh_from_db()
 
             #task_instance = TaskInstance(task = dag.get_task('OHE'), execution_date = datetime.now())
-            task_instance = dag_run[0].get_task_instance(task_id='OHE')
+            task_instance = dag_run.get_task_instance(task_id='OHE')
 
             xcom_result = task_instance.xcom_pull()
             
