@@ -9,7 +9,6 @@ from airflow.utils.db import create_session
 from datetime import datetime
 from airflow.api.common.experimental.trigger_dag import trigger_dag
 import pytz
-from airflow.utils.dag_run import DagRunType
 
 # Get the path to the project's root directory
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
