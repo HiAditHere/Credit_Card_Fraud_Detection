@@ -36,7 +36,7 @@ class TestPipeline(unittest.TestCase):
 
             # Wait for the DAG run to complete
             dag_run = DagRun.find(dag_id=dag_id)
-            dag_run.wait_until_finished()
+            dag_run[0].wait_until_finished()
 
             #task_instance = TaskInstance(task = dag.get_task('OHE'), execution_date = datetime.now())
             task_instance = dag_run[0].get_task_instance(task_id='OHE')
