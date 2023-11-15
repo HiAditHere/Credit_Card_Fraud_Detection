@@ -8,6 +8,8 @@ import time
 from airflow.utils.db import create_session
 from datetime import datetime
 from airflow.utils.state import State
+from airflow.api.common.trigger_dag import trigger_dag
+
 
 # Get the path to the project's root directory
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -34,16 +36,15 @@ class TestPipeline(unittest.TestCase):
 
             dag_run = dag.create_dagrun(run_id = 'manual2', state = State.RUNNING, external_trigger = True)
             
-            dag_run.create()
+            trigger_dag(dag_id='pipeline', run_id='manual2', conf=None, execution_date=None, replace_microseconds=True)
             # Wait for the DAG run to complete
             #dag_run = DagRun.find(dag_id=dag_id)
 
             print(dag_run)
             #dag_run.wait_until_finished()
 
-            while dag_run.state not in {State.SUCCESS, State.FAILED}:
+            while dag.get_dagrun(run_id='manual2').state not in {State.SUCCESS, State.FAILED}:
                 time.sleep(5)  # Adjust the sleep duration as needed
-                dag_run.refresh_from_db()
 
             #task_instance = TaskInstance(task = dag.get_task('OHE'), execution_date = datetime.now())
             task_instance = dag_run.get_task_instance(task_id='OHE')
