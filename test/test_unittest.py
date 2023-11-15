@@ -1,13 +1,12 @@
 import sys
 import os
 import unittest
-from airflow.models import DagBag, TaskInstance, DagRun
+from airflow.models import DagBag, DagRun
 import pandas as pd
 import pickle
 import time
 from airflow.utils.db import create_session
 from datetime import datetime
-from airflow.api.common.experimental.trigger_dag import trigger_dag
 import pytz
 
 # Get the path to the project's root directory
@@ -33,30 +32,10 @@ class TestPipeline(unittest.TestCase):
 
             time.sleep(30)
 
-            # Trigger the DAG run
-            execution_date = datetime(2023,11,11,tzinfo=pytz.UTC)
-            run_id = "manual1"
-
-            # Create a DagRun manually
-            dag_run = DagRun(
-                dag_id=dag.dag_id,
-                run_id=run_id,
-                execution_date=execution_date,
-                run_type='manual',
-            )
-
-            # Add the DagRun to the session and commit
-            dag_run.dag = dag
-            dag_run.update_state()
-            dag_run.update_state()
-            dag_run.log = []
-            dag_run.start_date = execution_date
-            dag_run.state = 'running'
-
-            dag_run.create()
+            dag.run()
 
             # Wait for the DAG run to complete
-            #dag_run = DagRun.find(dag_id=dag_id, execution_date=execution_date)
+            dag_run = DagRun.find(dag_id=dag_id)
             dag_run.wait_until_finished()
 
             #task_instance = TaskInstance(task = dag.get_task('OHE'), execution_date = datetime.now())
