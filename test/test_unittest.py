@@ -1,7 +1,7 @@
 import sys
 import os
 import unittest
-from airflow.models import DagBag, TaskInstance, DagRun
+from airflow.models import DagBag, TaskInstance, DagRun, DagRunType
 import pandas as pd
 import pickle
 import time
@@ -41,7 +41,8 @@ class TestPipeline(unittest.TestCase):
             dag_run = DagRun(
                 dag_id=dag.dag_id,
                 run_id=run_id,
-                execution_date=execution_date
+                execution_date=execution_date,
+                run_type=DagRunType.MANUAL,
             )
 
             # Add the DagRun to the session and commit
