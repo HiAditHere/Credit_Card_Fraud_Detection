@@ -39,7 +39,7 @@ class TestPipeline(unittest.TestCase):
             dag_run.wait_until_finished()
 
             #task_instance = TaskInstance(task = dag.get_task('OHE'), execution_date = datetime.now())
-            task_instance = dag_run.get_task_instance(task_id='OHE')
+            task_instance = dag_run[0].get_task_instance(task_id='OHE')
 
             xcom_result = task_instance.xcom_pull()
             
@@ -82,5 +82,5 @@ class TestPipeline(unittest.TestCase):
         self.assertEqual(male, True)
         self.assertEqual(female, True)
 
-if __name__ == 'main':
+if __name__ == '__main__':
     unittest.main()
