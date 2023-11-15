@@ -33,7 +33,8 @@ class TestPipeline(unittest.TestCase):
             time.sleep(30)
 
             dag_run = dag.create_dagrun(run_id = 'manual2', state = State.RUNNING, external_trigger = True)
-
+            
+            dag_run.run()
             # Wait for the DAG run to complete
             #dag_run = DagRun.find(dag_id=dag_id)
 
