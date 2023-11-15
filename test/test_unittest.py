@@ -7,7 +7,7 @@ import pickle
 import time
 from airflow.utils.db import create_session
 from datetime import datetime
-import pytz
+from airflow.utils.state import State
 
 # Get the path to the project's root directory
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -32,10 +32,10 @@ class TestPipeline(unittest.TestCase):
 
             time.sleep(30)
 
-            dag.run()
+            dag_run = dag.create_dagrun(run_id = 'manual2', state = State.RUNNING, external_trigger = True)
 
             # Wait for the DAG run to complete
-            dag_run = DagRun.find(dag_id=dag_id)
+            #dag_run = DagRun.find(dag_id=dag_id)
 
             print(dag_run)
             dag_run.wait_until_finished()
