@@ -1,0 +1,5 @@
+[core]
+    remote = myremote
+['remote "myremote"']
+    url = gs://dvc_bucket_for_pipeline
+    credentialpath = /Users/sowmyac/Downloads/dvc-lab-403002-f8e37864f280.json

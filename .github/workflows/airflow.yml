@@ -1,0 +1,27 @@
+name: Airflow Workflow
+
+on: 
+  push:
+    branches: main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Installations
+      run: |
+        pip install pytest
+        pip install pandas
+        pip install apache-airflow
+    - name: Initialize Airflow database
+      run: |
+        airflow db init
+
+    - name: Upgrade Airflow database
+      run: |
+        airflow db upgrade
+
+    - name: Test DAGs with Pytest
+      run: |
+        pytest test/unittest_test.py

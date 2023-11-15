@@ -1,0 +1,12 @@
+[console_scripts]
+dvc = dvc.cli:main
+
+[fsspec.specs]
+dvc = dvc.api:DVCFileSystem
+
+[pyinstaller40]
+hook-dirs = dvc.__pyinstaller:get_hook_dirs
+tests = dvc.__pyinstaller:get_PyInstaller_tests
+
+[pytest11]
+dvc-testing = dvc.testing.plugin
