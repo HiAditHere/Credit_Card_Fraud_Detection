@@ -59,28 +59,28 @@ load_data_task = PythonOperator(
 )
 
 drop_task = PythonOperator(
-    task_id='drop_columns',
+    task_id='drop_task',
     python_callable=drop_columns,
     op_args=[load_data_task.output],
     dag=dag,
 )
 
 merge_category_task = PythonOperator(
-    task_id='Merge_Columns',
+    task_id='merge_category_task',
     python_callable=merge_category,
     op_args=[drop_task.output],
     dag=dag,
 )
 
 woe_task = PythonOperator(
-    task_id='WOE',
+    task_id='woe_task',
     python_callable=woe_merchant,
     op_args=[merge_category_task.output],
     dag=dag,
 )
 
 ohe_task = PythonOperator(
-    task_id='OHE',
+    task_id='ohe_task',
     python_callable=ohe,
     op_args=[woe_task.output],
     dag=dag,
