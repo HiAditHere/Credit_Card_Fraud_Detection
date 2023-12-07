@@ -62,7 +62,6 @@ drop_task = PythonOperator(
     task_id='drop_columns',
     python_callable=drop_columns,
     op_args=[load_data_task.output],
-    executor_config={"memory": "8192Mi"},
     dag=dag,
 )
 
@@ -70,7 +69,6 @@ merge_category_task = PythonOperator(
     task_id='Merge_Columns',
     python_callable=merge_category,
     op_args=[drop_task.output],
-    executor_config={"memory": "8192Mi"},
     dag=dag,
 )
 
@@ -78,7 +76,6 @@ woe_task = PythonOperator(
     task_id='WOE',
     python_callable=woe_merchant,
     op_args=[merge_category_task.output],
-    executor_config={"memory": "8192Mi"},
     dag=dag,
 )
 
@@ -86,7 +83,6 @@ ohe_task = PythonOperator(
     task_id='OHE',
     python_callable=ohe,
     op_args=[woe_task.output],
-    executor_config={"memory": "8192Mi"},
     dag=dag,
 )
 
@@ -94,7 +90,6 @@ write_to_file = PythonOperator(
     task_id = 'write_to_file',
     python_callable = write_data,
     op_args=[ohe_task.output],
-    executor_config={"memory": "8192Mi"},
     dag=dag,
 )
 
