@@ -44,7 +44,7 @@
 #
 # Feel free to modify this file to suit your needs.
 ---
-version: '3.8'
+version: '3.9'
 x-airflow-common:
   &airflow-common
   # In order to add custom dependencies or upgrade provider packages you can use your extended image.
@@ -87,6 +87,9 @@ x-airflow-common:
       condition: service_healthy
 
 services:
+  python: 
+    image: python:3.9
+
   postgres:
     image: postgres:13
     environment:
@@ -261,6 +264,7 @@ services:
     user: "0:0"
     volumes:
       - ${AIRFLOW_PROJ_DIR:-.}:/sources
+      - ${AIRFLOW_PROJ_DIR:-.}/working_data:/opt/airflow/working_data
 
   airflow-cli:
     <<: *airflow-common

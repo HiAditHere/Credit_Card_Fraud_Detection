@@ -1,4 +1,14 @@
 __pycache__/
+
+# Data
+dags/data/file.csv
+dags/data/1_year_data.csv
+
+# Airflow Additional Folders
 logs/
-#file.csv
+plugins/
+working_data/
+
+# Virtual env
 venv/
+env/

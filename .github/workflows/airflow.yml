@@ -4,16 +4,23 @@ on:
   push:
     branches: main
 
+  pull_request:
+    branches: main
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    
     steps:
-    - uses: actions/checkout@v1
+    - name: Checkout Code
+      uses: actions/checkout@v1
+
     - name: Installations
       run: |
         pip install pytest
         pip install pandas
         pip install apache-airflow
+
     - name: Initialize Airflow database
       run: |
         airflow db init
@@ -25,3 +32,11 @@ jobs:
     - name: Test DAGs with Pytest
       run: |
         pytest test/unittest_test.py
+
+    - name: Notify on success
+      if: success()
+      run: echo "Unit tests passed successfully"
+
+    - name: Notify on failure
+      if: failure()
+      run: echo "Unit tests failed"
