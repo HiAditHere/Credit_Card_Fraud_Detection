@@ -50,37 +50,7 @@ We have run logistic regression algorithm and RandomForestClassifier algorithm, 
 To deploy our model, we have built images for creating the training pipeline and deploying the model. Both these images are registered in the Artifact registry on Google Cloud. These images are later used to build the training pipeline, generate an endpoint on Vertex AI, and deploy the registered model to the endpoint.
 Since our data is time series data, we wanted our model to be retrained, for every two months. We have done this using the Airflow dag(retrain.py). The dag is used to process the data of the new window and train the model using the new data. The newly trained model is fetched from the model registry and deployed to the endpoint again.
 
-# Cost Analysis
 
-Scoping
-
-Resources cost: data acquisition costs, software licenses
-Time estimation: Time period cost
-
-Development 
-	
-Data Preprocessing: Data cleaning, Feature engineering, Labeling cost  
-Infrastructure cost: cloud resources and computational cost(GPUs for training)
-
-Cloud service charges: 
-
-Software cost: Software installation and license 
-	
-Deployment 
-	
-Infrastructure cost: cloud resources, servers and containers  
-
-Cloud service charges: 
-
-Integration cost: application integration
-
-Security cost: security of deployed model 
-
-Monitoring and Maintenance 
-
-Infrastructure cost: cloud resources and maintenance servers  
-
-Model updating: retaining cost with the new data
 
 
 
