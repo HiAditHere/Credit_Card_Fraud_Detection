@@ -20,4 +20,68 @@ Here is an overview of our preprocessing pipeline that runs on airflow
 
 ![project steps](https://github.com/HiAditHere/Credit_Card_Fraud_Detection/blob/main/images/Data%20Pipeline%20Graph.png)
 
+Tasks and their functions:
+load_data_task:  loads the raw data into a data frame from the cloud 
+date_column_task: Performs date transformations on the date time column of our data      frame, extracts new features : month, day, hour
+Merchant_column_task: Cleans the merchant column 
+Dob_column_task: Extracts the age of each instance from the ‘dob’ column
+Distance_task: Computes the distance between the merchant location and the location from which the transaction is made
+Ohe_task: One-hot-encodes Gender column
+transaction_gap: Calculates the time difference between each card usage in hours
+If the card is being used for the firt time, the difference is set to 0 for    that particular   instance
+card_frequency_task: Calculates how frequently is the card being used
+drop_task: Drops the unwanted columns and reorders the columns of DataFrame
+Categorical_columns_task: Encodes Categorical Columns ‘city’, ’job’, ’merchant’, ’category’  using WOE Encoder 
+At the end of each task, the resulting dataframe is stored into a pickle file and the same is passed as input to the following task of the dag.
+
 ![project steps](https://github.com/HiAditHere/Credit_Card_Fraud_Detection/blob/main/images/dag_image.jpeg)
+
+
+# Model Development
+After preprocessing, we have done model development and experiment tracking using MLFlow. 
+
+![project steps](https://github.com/HiAditHere/Credit_Card_Fraud_Detection/blob/main/images/Model%20Pipeline%20Graph.png)
+
+We have run logistic regression algorithm and RandomForestClassifier algorithm, out of which the RandomForestClassifier has performed well.Using MLFlow, we have logged the parameters ‘n_estimators’, metrics  ‘accuracy’, ‘recall’, and ‘precision’, model artifacts of the various versions of the RandomForestClassifier model. 
+
+![project steps](https://github.com/HiAditHere/Credit_Card_Fraud_Detection/blob/main/images/Deployment%20Pipeline%20Graph.png)
+
+
+To deploy our model, we have built images for creating the training pipeline and deploying the model. Both these images are registered in the Artifact registry on Google Cloud. These images are later used to build the training pipeline, generate an endpoint on Vertex AI, and deploy the registered model to the endpoint.
+Since our data is time series data, we wanted our model to be retrained, for every two months. We have done this using the Airflow dag(retrain.py). The dag is used to process the data of the new window and train the model using the new data. The newly trained model is fetched from the model registry and deployed to the endpoint again.
+
+# Cost Analysis
+
+Scoping
+
+Resources cost: data acquisition costs, software licenses
+Time estimation: Time period cost
+
+Development 
+	
+Data Preprocessing: Data cleaning, Feature engineering, Labeling cost 
+Infrastructure cost: cloud resources and computational cost(GPUs for training)
+Cloud service charges: 
+Software cost: Software installation and license 
+	
+Deployment 
+	
+Infrastructure cost: cloud resources, servers and containers  
+Cloud service charges: 
+Integration cost: application integration
+Security cost: security of deployed model 
+
+Monitoring and Maintenance 
+
+Infrastructure cost: cloud resources and maintenance servers  
+Model updating: retaining cost with the new data
+
+
+
+
+
+
+
+
+
+
