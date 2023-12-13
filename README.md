@@ -7,5 +7,5 @@ In an increasingly digital and interconnected world, the importance of robust fr
 
 In this project, we have built an ML pipeline in which we train, and deploy an ML model to classify or predict fraudulent credit card transactions. Our pipeline incorporates the following components:
 
-![project steps](/images/Project Pipeline Graph.png)
+![project steps](https://github.com/HiAditHere/Credit_Card_Fraud_Detection/blob/main/images/Project%20Pipeline%20Graph.png)
 
