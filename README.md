@@ -59,8 +59,7 @@ Time estimation: Time period cost
 
 Development 
 	
-Data Preprocessing: Data cleaning, Feature engineering, Labeling cost 
-
+Data Preprocessing: Data cleaning, Feature engineering, Labeling cost  
 Infrastructure cost: cloud resources and computational cost(GPUs for training)
 
 Cloud service charges: 
