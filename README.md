@@ -60,20 +60,27 @@ Time estimation: Time period cost
 Development 
 	
 Data Preprocessing: Data cleaning, Feature engineering, Labeling cost 
+
 Infrastructure cost: cloud resources and computational cost(GPUs for training)
+
 Cloud service charges: 
+
 Software cost: Software installation and license 
 	
 Deployment 
 	
 Infrastructure cost: cloud resources, servers and containers  
+
 Cloud service charges: 
+
 Integration cost: application integration
+
 Security cost: security of deployed model 
 
 Monitoring and Maintenance 
 
 Infrastructure cost: cloud resources and maintenance servers  
+
 Model updating: retaining cost with the new data
 
 
